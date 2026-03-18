@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const collections = [
+  { key: "redis", label: "Redis", description: "Replication, persistence, internals." },
+  {
+    key: "distributed",
+    label: "Distributed Systems",
+    description: "Consensus, CAP, failure models."
+  },
+  {
+    key: "database",
+    label: "Database Internals",
+    description: "MVCC, storage engines, indexes."
+  },
+  { key: "concurrency", label: "Concurrency", description: "Threads, event loops, schedulers." }
+];
+
+const allEntries = [
+  ...(await getCollection("redis")),
+  ...(await getCollection("distributed")),
+  ...(await getCollection("database")),
+  ...(await getCollection("concurrency"))
+];
+
+const latest = allEntries
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6)
+  .map((entry) => {
+    const category = entry.collection;
+    return { entry, category };
+  });
+---
+<BaseLayout
+  title="Backend Engineer - System & Distributed Systems"
+  description="Ghi chú kỹ thuật chuyên sâu về system design, Redis, database internals và concurrency."
+>
+  <section class="hero content">
+    <h1 class="hero-title">Deep dives into backend systems.</h1>
+    <p class="hero-subtitle">
+      Redis replication, CAP tradeoffs, JVM concurrency, and the engineering decisions behind them.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-title">Chuyên mục</div>
+    <div class="card-grid">
+      {collections.map((category) => (
+        <a class="card" href={`/${category.key}/`}>
+          <h3>{category.label}</h3>
+          <p>{category.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Bài mới nhất</div>
+    <div class="post-list">
+      {latest.map(({ entry, category }, index) => (
+        <article class={`post-item${index === 0 ? " featured" : ""}`}>
+          <h3>
+            <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
+          </h3>
+          <div class="post-meta">
+            <span>{entry.data.category}</span>
+            <span>•</span>
+            <span>
+              {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+              })}
+            </span>
+          </div>
+          <p>{entry.data.description}</p>
+        </article>
+      ))}
+    </div>
+    <div class="section-action">
+      <a class="section-link" href="/posts">View all posts</a>
+    </div>
+  </section>
+</BaseLayout>

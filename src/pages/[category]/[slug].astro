@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import PostLayout from "../../layouts/PostLayout.astro";
+import { categoryKeys } from "../../config/categories";
+
+export async function getStaticPaths() {
+  const entries = await Promise.all(
+    categoryKeys.map(async (key) => ({
+      key,
+      items: await getCollection(key)
+    }))
+  );
+
+  return entries.flatMap(({ key, items }) =>
+    items.map((entry) => ({
+      params: { category: key, slug: entry.slug },
+      props: { entry, category: key }
+    }))
+  );
+}
+
+const { entry, category } = Astro.props;
+const { Content, headings } = await entry.render();
+---
+<PostLayout
+  entry={entry}
+  Content={Content}
+  headings={headings}
+  category={category}
+/>

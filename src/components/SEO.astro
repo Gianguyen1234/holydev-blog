@@ -1,0 +1,38 @@
+---
+const {
+  title,
+  description,
+  canonical,
+  openGraph,
+  pageType = "website"
+} = Astro.props;
+
+const defaultTitle = "HolyDev Blog";
+const defaultDescription =
+  "Ghi chú chuyên sâu về system design, distributed systems, Redis, database internals và concurrency.";
+
+const metaTitle = title ? `${title} · HolyDev` : defaultTitle;
+const metaDescription = description ?? defaultDescription;
+const canonicalUrl =
+  canonical ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString());
+
+const og = {
+  title: openGraph?.title ?? metaTitle,
+  description: openGraph?.description ?? metaDescription,
+  type: openGraph?.type ?? pageType,
+  url: openGraph?.url ?? canonicalUrl
+};
+---
+<title>{metaTitle}</title>
+<meta name="description" content={metaDescription} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:title" content={og.title} />
+<meta property="og:description" content={og.description} />
+<meta property="og:type" content={og.type} />
+<meta property="og:url" content={og.url} />
+<meta property="og:locale" content="vi_VN" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={og.title} />
+<meta name="twitter:description" content={og.description} />

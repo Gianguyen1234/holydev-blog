@@ -1,0 +1,51 @@
+---
+import SEO from "../components/SEO.astro";
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+
+const {
+  title,
+  description,
+  canonical,
+  openGraph,
+  pageType = "website"
+} = Astro.props;
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      openGraph={openGraph}
+      pageType={pageType}
+    />
+    <slot name="head" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="logo">HolyDev</div>
+        <nav class="nav">
+          <a href="/">Trang chủ</a>
+          <a href="/rss.xml">RSS</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+    <Footer />
+
+    {/*
+      Cloudflare Web Analytics (paste the script below this comment when ready)
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}'></script>
+    */}
+  </body>
+</html>

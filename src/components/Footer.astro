@@ -1,0 +1,25 @@
+---
+const links = [
+  { label: "Facebook", href: "https://www.facebook.com/groups/501799607277748" },
+  { label: "TikTok", href: "https://www.tiktok.com/@holy_dev5" },
+  { label: "YouTube", href: "https://www.youtube.com/@dev-maniac2349" },
+  { label: "GitHub", href: "https://github.com/Gianguyen1234" }
+];
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-brand">
+      <div class="logo">HolyDev</div>
+      <div class="footer-note">
+        Backend Engineer – System & Distributed Systems
+      </div>
+    </div>
+    <div class="footer-links">
+      {links.map((link) => (
+        <a href={link.href} target="_blank" rel="noopener noreferrer">
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</footer>

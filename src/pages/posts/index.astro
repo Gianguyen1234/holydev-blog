@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const allEntries = [
+  ...(await getCollection("redis")),
+  ...(await getCollection("distributed")),
+  ...(await getCollection("database")),
+  ...(await getCollection("concurrency"))
+];
+
+const posts = allEntries
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((entry) => ({
+    entry,
+    category: entry.collection
+  }));
+---
+<BaseLayout
+  title="All Posts"
+  description="Full archive of backend engineering posts."
+>
+  <section class="hero content">
+    <h1 class="hero-title">All Posts</h1>
+    <p class="hero-subtitle">
+      Full archive across Redis, distributed systems, database internals, and concurrency.
+    </p>
+  </section>
+
+  <section>
+    <div class="post-list">
+      {posts.map(({ entry, category }) => (
+        <article class="post-item">
+          <h3>
+            <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
+          </h3>
+          <div class="post-meta">
+            <span>{entry.data.category}</span>
+            <span>-</span>
+            <span>
+              {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+              })}
+            </span>
+          </div>
+          <p>{entry.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

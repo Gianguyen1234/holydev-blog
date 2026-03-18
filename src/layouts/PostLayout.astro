@@ -1,0 +1,56 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ToC from "../components/ToC.astro";
+import PostMeta from "../components/PostMeta.astro";
+
+const { entry, Content, headings, category } = Astro.props;
+const wordCount = entry.body ? entry.body.trim().split(/\s+/).length : 0;
+const readingTime = Math.max(1, Math.round(wordCount / 220));
+
+const canonical = new URL(`/${category}/${entry.slug}`, Astro.site).toString();
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.pubDate.toISOString(),
+  inLanguage: "vi-VN",
+  url: canonical,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonical
+  },
+  author: {
+    "@type": "Person",
+    name: "HolyDev"
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "HolyDev"
+  },
+  keywords: entry.data.category
+});
+---
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  canonical={canonical}
+  pageType="article"
+>
+  <script type="application/ld+json" is:inline slot="head">
+    {jsonLd}
+  </script>
+  <div class="post-layout">
+    <article class="content">
+      <h1>{entry.data.title}</h1>
+      <PostMeta
+        pubDate={entry.data.pubDate}
+        category={entry.data.category}
+        readingTime={readingTime}
+      />
+      <Content />
+    </article>
+    <ToC headings={headings} />
+  </div>
+</BaseLayout>

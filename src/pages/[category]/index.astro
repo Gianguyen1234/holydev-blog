@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { categoryKeys, categoryMap, isCategoryKey } from "../../config/categories";
+
+export async function getStaticPaths() {
+  return categoryKeys.map((category) => ({
+    params: { category }
+  }));
+}
+
+const { category } = Astro.params;
+
+if (!category || !isCategoryKey(category)) {
+  return new Response("Not Found", { status: 404 });
+}
+
+const label = categoryMap[category];
+const entries = await getCollection(category);
+const sorted = entries.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+<BaseLayout
+  title={label}
+  description={`Bài viết chuyên mục ${label}.`}
+>
+  <section class="hero content">
+    <h1 class="hero-title">{label}</h1>
+    <p class="hero-subtitle">
+      Danh sách bài viết trong chuyên mục {label}.
+    </p>
+  </section>
+  <section>
+    <div class="post-list">
+      {sorted.map((entry) => (
+        <article class="post-item">
+          <h3>
+            <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
+          </h3>
+          <div class="post-meta">
+            <span>
+              {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+              })}
+            </span>
+          </div>
+          <p>{entry.data.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>

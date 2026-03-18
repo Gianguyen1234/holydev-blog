@@ -1,0 +1,15 @@
+---
+const { pubDate, category, readingTime } = Astro.props;
+const formattedDate = new Date(pubDate).toLocaleDateString("vi-VN", {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+});
+---
+<div class="post-meta">
+  <span>{formattedDate}</span>
+  <span>•</span>
+  <span>{category}</span>
+  <span>•</span>
+  <span>{readingTime} phút đọc</span>
+</div>
