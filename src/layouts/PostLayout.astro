@@ -9,7 +9,7 @@ const readingTime = Math.max(1, Math.round(wordCount / 220));
 
 const canonical = new URL(`/${category}/${entry.slug}`, Astro.site).toString();
 
-const jsonLd = JSON.stringify({
+const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: entry.data.title,
@@ -30,7 +30,7 @@ const jsonLd = JSON.stringify({
     name: "HolyDev"
   },
   keywords: entry.data.category
-});
+};
 ---
 <BaseLayout
   title={entry.data.title}
@@ -38,9 +38,12 @@ const jsonLd = JSON.stringify({
   canonical={canonical}
   pageType="article"
 >
-  <script type="application/ld+json" is:inline slot="head">
-    {jsonLd}
-  </script>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+    slot="head"
+  />
+
   <div class="post-layout">
     <article class="content">
       <h1>{entry.data.title}</h1>
