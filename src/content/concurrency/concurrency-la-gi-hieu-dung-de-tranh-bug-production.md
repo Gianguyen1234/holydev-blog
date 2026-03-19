@@ -40,9 +40,9 @@ Kết quả: **oversell**
 
 **Parallelism (song song)** là việc nhiều task thực sự chạy cùng lúc trên nhiều CPU core.
 
-| Khái niệm | Ý nghĩa |
-| --- | --- |
-| Concurrency | nhiều task được xử lý xen kẽ |
+| Khái niệm   | Ý nghĩa                          |
+|------------|----------------------------------|
+| Concurrency | nhiều task được xử lý xen kẽ     |
 | Parallelism | nhiều task chạy cùng lúc thật sự |
 
 Ví dụ:
