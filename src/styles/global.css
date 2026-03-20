@@ -1,65 +1,79 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {
-  color-scheme: dark;
-  --bg: #0b0d10;
-  --bg-elev: #12151b;
-  --text: #edf2f7;
-  --text-muted: #adb8c6;
-  --border: #263041;
-  --accent: #7cc0ff;
-  --code-bg: #0d1117;
-  --inline-code-bg: rgba(124, 192, 255, 0.1);
-  --bg-grad-1: #182033;
-  --bg-grad-2: #121823;
-  --header-bg: rgba(11, 13, 16, 0.68);
-  --surface-soft: rgba(18, 21, 27, 0.84);
-  --surface-strong: rgba(18, 21, 27, 0.96);
-  --surface-accent-soft: rgba(124, 192, 255, 0.06);
-  --surface-accent-strong: rgba(124, 192, 255, 0.08);
-  --border-soft: rgba(255, 255, 255, 0.08);
-  --border-faint: rgba(255, 255, 255, 0.04);
-  --shadow-strong: rgba(0, 0, 0, 0.2);
-  --toc-bg: rgba(18, 21, 27, 0.82);
-  --toc-shadow: none;
-  --toggle-bg: rgba(255, 255, 255, 0.04);
-  --toggle-thumb: #f4f7fb;
-  --toggle-icon: #7d8896;
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-elev: #f8fafc;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --code-bg: #f6f8fa;
+  --code-border: #e5e7eb;
+  --code-bg-top: #f8fafc;
+  --code-bg-bottom: #f3f6f9;
+  --code-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  --inline-code-bg: #eef2ff;
+  --bg-grad-1: #f4f7fb;
+  --bg-grad-2: #fbfcfe;
+  --header-bg: rgba(255, 255, 255, 0.82);
+  --surface-soft: #ffffff;
+  --surface-accent-soft: color-mix(in srgb, var(--accent) 4%, var(--bg) 96%);
+  --surface-accent-strong: color-mix(in srgb, var(--accent) 8%, var(--bg) 92%);
+  --border-soft: color-mix(in srgb, var(--border) 85%, transparent 15%);
+  --border-faint: color-mix(in srgb, var(--border) 65%, transparent 35%);
+  --shadow-strong: rgba(15, 23, 42, 0.06);
+  --toc-bg: color-mix(in srgb, var(--bg) 94%, var(--bg-elev) 6%);
+  --toc-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  --toggle-bg: color-mix(in srgb, var(--bg-elev) 70%, var(--bg) 30%);
+  --toggle-thumb: var(--bg);
+  --toggle-icon: color-mix(in srgb, var(--text-muted) 90%, var(--text) 10%);
+  --toggle-knob-icon: color-mix(in srgb, var(--text) 78%, var(--accent) 22%);
+  --toggle-knob-shadow: 0 1px 2px rgba(15, 23, 42, 0.12), 0 6px 14px rgba(15, 23, 42, 0.06);
   --max-width: 980px;
   --content-width: 760px;
   font-family: "IBM Plex Sans", sans-serif;
   line-height: 1.75;
 }
 
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f6f3ee;
-  --bg-elev: #fffdf9;
-  --text: #0f172a;
-  --text-muted: #526072;
-  --border: #dde3ea;
-  --accent: #2759c4;
-  --code-bg: #f6f8fa;
-  --inline-code-bg: #eef2f7;
-  --bg-grad-1: #f0ebe4;
-  --bg-grad-2: #fbf8f4;
-  --header-bg: rgba(246, 243, 238, 0.84);
-  --surface-soft: rgba(255, 253, 249, 0.92);
-  --surface-strong: #ffffff;
-  --surface-accent-soft: rgba(15, 23, 42, 0.02);
-  --surface-accent-strong: rgba(15, 23, 42, 0.04);
-  --border-soft: rgba(15, 23, 42, 0.09);
-  --border-faint: rgba(15, 23, 42, 0.05);
-  --shadow-strong: rgba(15, 23, 42, 0.06);
-  --toc-bg: rgba(255, 253, 249, 0.76);
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0f14;
+  --bg-elev: #12151b;
+  --text: #edf2f7;
+  --text-muted: #b0bac7;
+  --border: #263041;
+  --accent: #7cc0ff;
+  --code-bg: #0d1117;
+  --code-border: #314055;
+  --code-bg-top: #111927;
+  --code-bg-bottom: #0b111b;
+  --code-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+  --inline-code-bg: rgba(124, 192, 255, 0.12);
+  --bg-grad-1: #182033;
+  --bg-grad-2: #121823;
+  --header-bg: rgba(11, 15, 20, 0.68);
+  --surface-soft: rgba(18, 21, 27, 0.92);
+  --surface-accent-soft: color-mix(in srgb, var(--accent) 6%, var(--bg-elev) 94%);
+  --surface-accent-strong: color-mix(in srgb, var(--accent) 8%, var(--bg-elev) 92%);
+  --border-soft: color-mix(in srgb, var(--text) 10%, transparent 90%);
+  --border-faint: color-mix(in srgb, var(--text) 5%, transparent 95%);
+  --shadow-strong: rgba(0, 0, 0, 0.2);
+  --toc-bg: rgba(18, 21, 27, 0.82);
   --toc-shadow: none;
-  --toggle-bg: rgba(15, 23, 42, 0.04);
-  --toggle-thumb: #ffffff;
-  --toggle-icon: #5c6776;
+  --toggle-bg: color-mix(in srgb, var(--bg-elev) 78%, var(--bg) 22%);
+  --toggle-thumb: #f4f7fb;
+  --toggle-icon: color-mix(in srgb, var(--text-muted) 86%, var(--text) 14%);
+  --toggle-knob-icon: #0f172a;
+  --toggle-knob-shadow: 0 1px 2px rgba(15, 23, 42, 0.15), 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -194,7 +208,7 @@ main {
   height: 28px;
   border-radius: 50%;
   background: var(--toggle-thumb);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.15), 0 6px 14px var(--shadow-strong);
+  box-shadow: var(--toggle-knob-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,7 +222,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0f172a;
+  color: var(--toggle-knob-icon);
   transition: opacity 140ms ease;
 }
 
@@ -216,29 +230,24 @@ main {
   opacity: 0;
 }
 
-:root[data-theme="dark"] .theme-toggle-knob,
-:root:not([data-theme="light"]) .theme-toggle-knob {
+:root[data-theme="dark"] .theme-toggle-knob {
   transform: translateX(36px);
 }
 
-:root[data-theme="dark"] .theme-toggle-knob-sun,
-:root:not([data-theme="light"]) .theme-toggle-knob-sun {
+:root[data-theme="dark"] .theme-toggle-knob-sun {
   opacity: 0;
 }
 
-:root[data-theme="dark"] .theme-toggle-knob-moon,
-:root:not([data-theme="light"]) .theme-toggle-knob-moon {
+:root[data-theme="dark"] .theme-toggle-knob-moon {
   opacity: 1;
 }
 
-:root[data-theme="dark"] .theme-toggle-glyph-dark,
-:root:not([data-theme="light"]) .theme-toggle-glyph-dark {
+:root[data-theme="dark"] .theme-toggle-glyph-dark {
   color: color-mix(in srgb, var(--accent) 60%, var(--text) 40%);
   opacity: 1;
 }
 
-:root[data-theme="dark"] .theme-toggle-glyph-light,
-:root:not([data-theme="light"]) .theme-toggle-glyph-light {
+:root[data-theme="dark"] .theme-toggle-glyph-light {
   opacity: 0.55;
 }
 
@@ -249,10 +258,6 @@ main {
 
 :root[data-theme="light"] .theme-toggle-glyph-dark {
   opacity: 0.5;
-}
-
-:root[data-theme="light"] .theme-toggle-knob-icon {
-  color: #946200;
 }
 
 .sr-only {
@@ -417,7 +422,7 @@ main {
   align-self: start;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
-  padding: 16px 16px 16px 18px;
+  padding: 16px 14px 16px 16px;
   border: 1px solid var(--border);
   border-left: 3px solid color-mix(in srgb, var(--accent) 42%, transparent 58%);
   border-radius: 12px;
@@ -425,6 +430,29 @@ main {
   box-shadow: var(--toc-shadow);
   font-size: 14px;
   color: var(--text-muted);
+}
+
+.toc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text) 20%, transparent 80%);
+  border-radius: 999px;
+}
+
+.toc::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-title {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.84;
 }
 
 .toc ul {
@@ -441,13 +469,15 @@ main {
 
 .toc-section {
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
 .toc-children {
   display: none;
-  gap: 4px;
-  margin-left: 8px;
+  gap: 5px;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid color-mix(in srgb, var(--border) 80%, transparent 20%);
 }
 
 .toc-section.is-open .toc-children {
@@ -462,15 +492,20 @@ main {
   color: var(--text);
   opacity: 0.82;
   display: block;
-  padding: 4px 0 4px 10px;
-  margin-left: -12px;
-  border-left: 2px solid transparent;
-  transition: color 160ms ease, opacity 160ms ease, border-color 160ms ease;
+  padding: 6px 10px 6px 12px;
+  margin-left: -10px;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  line-height: 1.8;
+  transition: color 180ms ease, opacity 180ms ease, border-color 180ms ease,
+    background-color 180ms ease, transform 180ms ease;
 }
 
 .toc a:hover {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 72%, var(--text) 28%);
   opacity: 1;
+  transform: translateX(3px);
+  background: color-mix(in srgb, var(--accent) 6%, transparent 94%);
 }
 
 .toc a.is-active {
@@ -478,16 +513,24 @@ main {
   opacity: 1;
   border-left-color: color-mix(in srgb, var(--accent) 80%, transparent 20%);
   font-weight: 600;
+  background: color-mix(in srgb, var(--accent) 12%, transparent 88%);
+}
+
+.toc-section.is-open > a {
+  opacity: 0.96;
 }
 
 .toc a[data-toc-child="true"] {
   font-size: 13px;
   color: var(--text-muted);
-  padding-left: 12px;
+  padding-left: 10px;
+  margin-left: -2px;
+  opacity: 0.74;
 }
 
 .toc a[data-toc-child="true"].is-active {
   color: var(--accent);
+  opacity: 1;
 }
 
 .post-layout article {
@@ -529,14 +572,29 @@ main {
 }
 
 .post-layout article pre {
-  background: var(--code-bg);
-  border: 1px solid var(--border-soft);
+  background: linear-gradient(180deg, var(--code-bg-top) 0%, var(--code-bg-bottom) 100%) !important;
+  border: 1px solid var(--code-border);
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 4%, transparent 96%), 0 10px 24px var(--shadow-strong);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 5%, transparent 95%), var(--code-shadow);
   padding: 20px;
   margin: 24px 0;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+.post-layout article pre.astro-code {
+  background: linear-gradient(180deg, var(--code-bg-top) 0%, var(--code-bg-bottom) 100%) !important;
+  color: var(--code-text);
+}
+
+:root[data-theme="light"] .post-layout article pre.astro-code,
+:root[data-theme="light"] .post-layout article pre.astro-code span {
+  color: var(--shiki-light, inherit) !important;
+}
+
+:root[data-theme="dark"] .post-layout article pre.astro-code,
+:root[data-theme="dark"] .post-layout article pre.astro-code span {
+  color: var(--shiki-dark, inherit) !important;
 }
 
 .post-layout article pre code {
@@ -547,6 +605,8 @@ main {
   box-shadow: none !important;
   padding: 0;
   margin: 0;
+  font-size: 0.95em;
+  line-height: 1.7;
 }
 
 .post-layout article pre code span,

@@ -32,7 +32,10 @@ export default defineConfig({
   markdown: {
     rehypePlugins,
     shikiConfig: {
-      theme: "github-dark"
+      themes: {
+        light: "github-light",
+        dark: "github-dark"
+      }
     }
   },
   integrations: [sitemap()]
