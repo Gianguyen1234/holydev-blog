@@ -25,14 +25,58 @@ const {
     />
     <slot name="head" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem("theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark";
+        document.documentElement.dataset.theme = stored || preferred;
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
       <div class="container">
         <div class="logo">HolyDev</div>
-        <nav class="nav">
-          <a href="/">Trang chủ</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="/">Trang chu</a>
           <a href="/rss.xml">RSS</a>
+          <button
+            type="button"
+            class="theme-toggle"
+            aria-label="Toggle color theme"
+            data-theme-toggle
+            aria-pressed="false"
+          >
+            <span class="theme-toggle-track">
+              <span class="theme-toggle-glyph theme-toggle-glyph-light" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+                </svg>
+              </span>
+              <span class="theme-toggle-glyph theme-toggle-glyph-dark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.2 15.4a8.5 8.5 0 0 1-11.6-11A9 9 0 1 0 20.2 15.4Z"></path>
+                </svg>
+              </span>
+              <span class="theme-toggle-knob" aria-hidden="true">
+                <span class="theme-toggle-knob-icon theme-toggle-knob-sun">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path>
+                  </svg>
+                </span>
+                <span class="theme-toggle-knob-icon theme-toggle-knob-moon">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.2 15.4a8.5 8.5 0 0 1-11.6-11A9 9 0 1 0 20.2 15.4Z"></path>
+                  </svg>
+                </span>
+              </span>
+            </span>
+            <span class="sr-only" data-theme-label>Toggle theme</span>
+          </button>
         </nav>
       </div>
     </header>
@@ -47,5 +91,30 @@ const {
       Cloudflare Web Analytics (paste the script below this comment when ready)
       <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}'></script>
     */}
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const button = document.querySelector("[data-theme-toggle]");
+        const label = document.querySelector("[data-theme-label]");
+
+        if (!button || !label) return;
+
+        const syncLabel = () => {
+          const isDark = root.dataset.theme !== "light";
+          button.setAttribute("aria-pressed", String(isDark));
+          button.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+          label.textContent = isDark ? "Switch to light theme" : "Switch to dark theme";
+        };
+
+        button.addEventListener("click", () => {
+          const next = root.dataset.theme === "light" ? "dark" : "light";
+          root.dataset.theme = next;
+          localStorage.setItem("theme", next);
+          syncLabel();
+        });
+
+        syncLabel();
+      })();
+    </script>
   </body>
 </html>

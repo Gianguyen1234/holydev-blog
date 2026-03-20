@@ -1,21 +1,129 @@
 ---
 const { headings } = Astro.props;
+
+const filteredHeadings = headings?.filter((heading) => heading.depth <= 3) ?? [];
+const sections = [];
+let currentSection = null;
+
+for (const heading of filteredHeadings) {
+  if (heading.depth === 2) {
+    currentSection = { heading, children: [] };
+    sections.push(currentSection);
+    continue;
+  }
+
+  if (heading.depth === 3 && currentSection) {
+    currentSection.children.push(heading);
+  }
+}
+
+if (!sections.length && filteredHeadings.length) {
+  sections.push(...filteredHeadings.map((heading) => ({ heading, children: [] })));
+}
 ---
 <aside class="toc">
-  <div class="section-title">Mục lục</div>
+  <div class="section-title">Muc luc</div>
   <nav>
-    {headings?.length ? (
-      <ul>
-        {headings
-          .filter((heading) => heading.depth <= 3)
-          .map((heading) => (
-            <li>
-              <a href={`#${heading.slug}`}>{heading.text}</a>
-            </li>
-          ))}
+    {sections.length ? (
+      <ul class="toc-sections">
+        {sections.map((section) => (
+          <li class="toc-section" data-toc-section={section.heading.slug}>
+            <a href={`#${section.heading.slug}`} data-toc-link={section.heading.slug}>
+              {section.heading.text}
+            </a>
+            {section.children.length ? (
+              <ul class="toc-children">
+                {section.children.map((child) => (
+                  <li>
+                    <a href={`#${child.slug}`} data-toc-link={child.slug} data-toc-child="true">
+                      {child.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </li>
+        ))}
       </ul>
     ) : (
-      <div>Chưa có mục lục.</div>
+      <div>Chua co muc luc.</div>
     )}
   </nav>
 </aside>
+
+{
+  sections.length ? (
+    <script is:inline>
+      (() => {
+        const links = Array.from(document.querySelectorAll("[data-toc-link]"));
+        const sectionEls = Array.from(document.querySelectorAll("[data-toc-section]"));
+        const headingEls = links
+          .map((link) => {
+            const id = link.getAttribute("data-toc-link");
+            return id ? document.getElementById(id) : null;
+          })
+          .filter(Boolean);
+
+        if (!links.length || !headingEls.length) return;
+
+        const findParentSectionId = (id) => {
+          const link = links.find((item) => item.getAttribute("data-toc-link") === id);
+          if (!link) return null;
+          const section = link.closest("[data-toc-section]");
+          return section?.getAttribute("data-toc-section") ?? null;
+        };
+
+        const setActive = (id) => {
+          const activeSectionId = findParentSectionId(id);
+
+          links.forEach((link) => {
+            const isActive = link.getAttribute("data-toc-link") === id;
+            link.classList.toggle("is-active", isActive);
+
+            if (isActive) {
+              link.setAttribute("aria-current", "true");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+
+          sectionEls.forEach((section) => {
+            const isOpen = section.getAttribute("data-toc-section") === activeSectionId;
+            section.classList.toggle("is-open", isOpen);
+          });
+        };
+
+        const getActiveHeadingId = () => {
+          let current = headingEls[0];
+
+          for (const heading of headingEls) {
+            if (heading.getBoundingClientRect().top <= 140) {
+              current = heading;
+            } else {
+              break;
+            }
+          }
+
+          return current?.id;
+        };
+
+        let ticking = false;
+        const update = () => {
+          ticking = false;
+          setActive(getActiveHeadingId());
+        };
+
+        const onScroll = () => {
+          if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(update);
+          }
+        };
+
+        update();
+        document.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+      })();
+    </script>
+  ) : null
+}
