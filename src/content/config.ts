@@ -4,6 +4,7 @@ const baseSchema = z.object({
   title: z.string(),
   description: z.string(),
   pubDate: z.date(),
+  image: z.string().optional(),
   category: z.enum([
     "Redis",
     "Distributed Systems",

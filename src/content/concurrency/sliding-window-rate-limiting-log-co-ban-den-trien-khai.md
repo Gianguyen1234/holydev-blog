@@ -3,7 +3,9 @@ title: "Sliding Window Rate Limiting (Log) từ cơ bản đến triển khai"
 description: "Giải thích sliding window rate limiting từ góc nhìn thực tế: rate limiting là gì, cách hiểu '60 giây gần nhất', cách lưu timestamp theo từng user, và những vấn đề cần xử lý khi triển khai trong môi trường concurrent."
 pubDate: 2026-03-23
 category: "Concurrency"
+image: "/images/concurrency/sliding-window-rate-limiting.png"
 ---
+![Sliding window rate limiting](/images/concurrency/sliding-window-rate-limiting.png)
 
 ## 1. Rate limiting là gì?
 

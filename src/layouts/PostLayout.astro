@@ -8,6 +8,9 @@ const wordCount = entry.body ? entry.body.trim().split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(wordCount / 220));
 
 const canonical = new URL(`/${category}/${entry.slug}`, Astro.site).toString();
+const image =
+  entry.data.image &&
+  (Astro.site ? new URL(entry.data.image, Astro.site).toString() : entry.data.image);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -29,13 +32,15 @@ const jsonLd = {
     "@type": "Organization",
     name: "HolyDev"
   },
-  keywords: entry.data.category
+  keywords: entry.data.category,
+  ...(image ? { image } : {})
 };
 ---
 <BaseLayout
   title={entry.data.title}
   description={entry.data.description}
   canonical={canonical}
+  openGraph={image ? { image } : undefined}
   pageType="article"
 >
   <script

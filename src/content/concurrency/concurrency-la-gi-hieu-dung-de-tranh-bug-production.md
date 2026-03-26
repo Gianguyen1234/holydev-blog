@@ -3,7 +3,9 @@ title: "Concurrency là gì? Hiểu đúng để tránh bug production"
 description: "Giải thích concurrency, race condition, thread-safe, atomic và cách tránh các bug phổ biến trong backend khi xử lý nhiều request đồng thời."
 pubDate: 2026-03-19
 category: "Concurrency"
+image: "/images/concurrency/concurrency-la-gi.png"
 ---
+![Concurrency in Java](/images/concurrency/concurrency-la-gi.png)
 
 ## 1. Vấn đề thực tế
 

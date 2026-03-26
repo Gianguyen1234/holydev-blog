@@ -1,0 +1,13 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0b0f14"/>
+  <circle cx="166" cy="70" r="300" fill="#182033"/>
+  <circle cx="1080" cy="-30" r="240" fill="#121823"/>
+  <rect x="88" y="96" width="1024" height="438" rx="24" fill="#12151b" stroke="#263041" stroke-width="2"/>
+  <rect x="128" y="146" width="188" height="34" rx="17" fill="#1a2333"/>
+  <text x="155" y="169" fill="#7cc0ff" font-family="'IBM Plex Sans', Arial, sans-serif" font-size="18" font-weight="600">HolyDev</text>
+  <text x="128" y="278" fill="#edf2f7" font-family="'IBM Plex Sans', Arial, sans-serif" font-size="64" font-weight="700">Backend Systems</text>
+  <text x="128" y="352" fill="#edf2f7" font-family="'IBM Plex Sans', Arial, sans-serif" font-size="64" font-weight="700">and Distributed Systems</text>
+  <text x="128" y="418" fill="#b0bac7" font-family="'IBM Plex Sans', Arial, sans-serif" font-size="28" font-weight="400">Redis replication, CAP tradeoffs, JVM concurrency,</text>
+  <text x="128" y="456" fill="#b0bac7" font-family="'IBM Plex Sans', Arial, sans-serif" font-size="28" font-weight="400">database internals, and the engineering decisions behind them.</text>
+  <rect x="128" y="490" width="184" height="2" rx="1" fill="#7cc0ff" fill-opacity="0.85"/>
+</svg>
