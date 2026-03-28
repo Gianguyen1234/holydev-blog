@@ -129,12 +129,18 @@ main {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
 .site-header .logo {
   font-size: 20px;
+}
+
+.site-header .logo:hover {
+  color: color-mix(in srgb, var(--text) 82%, var(--accent) 18%);
 }
 
 .nav {
