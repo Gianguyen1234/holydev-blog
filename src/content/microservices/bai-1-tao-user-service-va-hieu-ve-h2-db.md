@@ -1,7 +1,7 @@
 ---
 title: "Bài 1: tạo user-service và hiểu về H2 DB"
 description: "Hướng dẫn tạo user-service đầu tiên với Java Spring Boot, xây REST API cơ bản và hiểu cách H2 in-memory database hoạt động."
-pubDate: 2025-03-27
+pubDate: 2025-06-28
 category: "Microservices"
 ---
 
