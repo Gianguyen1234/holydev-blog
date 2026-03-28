@@ -1,7 +1,7 @@
 ---
 title: "Hướng Dẫn Tổng Quan Xây Dựng Hệ Thống Microservices Với Java Spring Boot"
 description: "Tổng quan cách xây dựng hệ thống microservices với Java Spring Boot, gồm user-service, order-service, API Gateway, Eureka Discovery Server và giao tiếp giữa các service bằng OpenFeign."
-pubDate: 2026-03-26
+pubDate: 2025-03-25
 category: "Microservices"
 image: "/images/microservices/microservices.png"
 ---
