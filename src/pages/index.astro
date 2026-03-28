@@ -1,40 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { categories, categoryKeys } from "../config/categories";
 
-const collections = [
-  { key: "redis", label: "Redis", description: "Replication, persistence, internals." },
-  {
-    key: "distributed",
-    label: "Distributed Systems",
-    description: "Consensus, CAP, failure models."
-  },
-  {
-    key: "database",
-    label: "Database Internals",
-    description: "MVCC, storage engines, indexes."
-  },
-  { key: "concurrency", label: "Concurrency", description: "Threads, event loops, schedulers." }
-];
-
-const allEntries = [
-  ...(await getCollection("redis")),
-  ...(await getCollection("distributed")),
-  ...(await getCollection("database")),
-  ...(await getCollection("concurrency"))
-];
+const allEntries = (await Promise.all(categoryKeys.map((key) => getCollection(key)))).flat();
 
 const latest = allEntries
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 6)
-  .map((entry) => {
-    const category = entry.collection;
-    return { entry, category };
-  });
+  .map((entry) => ({
+    entry,
+    category: entry.collection
+  }));
 ---
 <BaseLayout
   title="Backend Engineer - System & Distributed Systems"
-  description="Ghi chú kỹ thuật chuyên sâu về system design, Redis, database internals và concurrency."
+  description="Ghi ch&#250; k&#7929; thu&#7853;t chuy&#234;n s&#226;u v&#7873; system design, Redis, database internals, concurrency, and microservices."
 >
   <section class="hero content">
     <h1 class="hero-title">Deep dives into backend systems.</h1>
@@ -44,19 +25,19 @@ const latest = allEntries
   </section>
 
   <section>
-    <div class="section-title">Chuyên mục</div>
+    <div class="section-title">Chuy&#234;n m&#7909;c</div>
     <div class="card-grid">
-      {collections.map((category) => (
-        <a class="card" href={`/${category.key}/`}>
-          <h3>{category.label}</h3>
-          <p>{category.description}</p>
+      {categoryKeys.map((key) => (
+        <a class="card" href={`/${key}/`}>
+          <h3>{categories[key].label}</h3>
+          <p class="card-desc">{categories[key].description}</p>
         </a>
       ))}
     </div>
   </section>
 
   <section>
-    <div class="section-title">Bài mới nhất</div>
+    <div class="section-title">B&#224;i m&#7899;i nh&#7845;t</div>
     <div class="post-list">
       {latest.map(({ entry, category }, index) => (
         <article class={`post-item${index === 0 ? " featured" : ""}`}>
@@ -65,7 +46,7 @@ const latest = allEntries
           </h3>
           <div class="post-meta">
             <span>{entry.data.category}</span>
-            <span>•</span>
+            <span>&#8226;</span>
             <span>
               {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
                 year: "numeric",

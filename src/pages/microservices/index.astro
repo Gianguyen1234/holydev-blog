@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("microservices")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+<BaseLayout
+  title="Microservices"
+  description="Series hub for microservices articles with Java Spring Boot."
+>
+  <section class="hero content">
+    <h1 class="hero-title">Microservices</h1>
+    <p class="hero-subtitle">
+      A series of articles on building and understanding microservices with Java Spring Boot.
+    </p>
+  </section>
+
+  <section class="content">
+    <p>
+      This page collects the full microservices series in one place.
+    </p>
+  </section>
+
+  <section>
+    {posts.length ? (
+      <div class="post-list">
+        {posts.map((entry) => (
+          <article class="post-item">
+            <h3>
+              <a href={`/microservices/${entry.slug}`}>{entry.data.title}</a>
+            </h3>
+            <div class="post-meta">
+              <span>
+                {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric"
+                })}
+              </span>
+            </div>
+            <p>{entry.data.description}</p>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="content">
+        <p>No microservices posts imported yet.</p>
+      </div>
+    )}
+  </section>
+</BaseLayout>

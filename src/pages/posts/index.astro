@@ -1,13 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { categoryKeys } from "../../config/categories";
 
-const allEntries = [
-  ...(await getCollection("redis")),
-  ...(await getCollection("distributed")),
-  ...(await getCollection("database")),
-  ...(await getCollection("concurrency"))
-];
+const allEntries = (await Promise.all(categoryKeys.map((key) => getCollection(key)))).flat();
 
 const posts = allEntries
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -23,7 +19,7 @@ const posts = allEntries
   <section class="hero content">
     <h1 class="hero-title">All Posts</h1>
     <p class="hero-subtitle">
-      Full archive across Redis, distributed systems, database internals, and concurrency.
+      Full archive across Redis, distributed systems, database internals, concurrency, and microservices.
     </p>
   </section>
 
@@ -36,7 +32,7 @@ const posts = allEntries
           </h3>
           <div class="post-meta">
             <span>{entry.data.category}</span>
-            <span>-</span>
+            <span>&#8226;</span>
             <span>
               {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
                 year: "numeric",

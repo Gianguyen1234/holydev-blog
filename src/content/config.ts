@@ -9,7 +9,8 @@ const baseSchema = z.object({
     "Redis",
     "Distributed Systems",
     "Database Internals",
-    "Concurrency"
+    "Concurrency",
+    "Microservices"
   ])
 });
 
@@ -17,10 +18,12 @@ const redis = defineCollection({ type: "content", schema: baseSchema });
 const distributed = defineCollection({ type: "content", schema: baseSchema });
 const database = defineCollection({ type: "content", schema: baseSchema });
 const concurrency = defineCollection({ type: "content", schema: baseSchema });
+const microservices = defineCollection({ type: "content", schema: baseSchema });
 
 export const collections = {
   redis,
   distributed,
   database,
-  concurrency
+  concurrency,
+  microservices
 };

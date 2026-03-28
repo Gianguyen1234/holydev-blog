@@ -1,9 +1,24 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import ToC from "../components/ToC.astro";
 import PostMeta from "../components/PostMeta.astro";
 
-const { entry, Content, headings, category } = Astro.props;
+type Entry =
+  | CollectionEntry<"redis">
+  | CollectionEntry<"distributed">
+  | CollectionEntry<"database">
+  | CollectionEntry<"concurrency">
+  | CollectionEntry<"microservices">;
+
+const { entry, Content, headings, category, previousEntry, nextEntry } = Astro.props as {
+  entry: Entry;
+  Content: any;
+  headings: { depth: number; slug: string; text: string }[];
+  category: string;
+  previousEntry?: Entry | null;
+  nextEntry?: Entry | null;
+};
 const wordCount = entry.body ? entry.body.trim().split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(wordCount / 220));
 
@@ -48,6 +63,59 @@ const jsonLd = {
     set:html={JSON.stringify(jsonLd)}
     slot="head"
   />
+  <script is:inline slot="head">
+    (() => {
+      const initCopyButtons = () => {
+        const blocks = document.querySelectorAll(".post-layout article pre");
+
+        blocks.forEach((block) => {
+          if (block.querySelector("[data-copy-code]")) return;
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "code-copy-button";
+          button.setAttribute("data-copy-code", "");
+          button.textContent = "Copy";
+          block.appendChild(button);
+        });
+      };
+
+      const copyCode = async (button) => {
+        const block = button.closest("pre");
+        const code = block?.querySelector("code");
+        const text = code?.textContent;
+
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = button.textContent;
+          button.textContent = "Copied";
+          button.dataset.copied = "true";
+          window.setTimeout(() => {
+            button.textContent = original ?? "Copy";
+            delete button.dataset.copied;
+          }, 1600);
+        } catch {
+          button.textContent = "Failed";
+          window.setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1600);
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", initCopyButtons, { once: true });
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+
+        const button = target.closest("[data-copy-code]");
+        if (!(button instanceof HTMLButtonElement)) return;
+
+        copyCode(button);
+      });
+    })();
+  </script>
 
   <div class="post-layout">
     <article class="content">
@@ -58,6 +126,30 @@ const jsonLd = {
         readingTime={readingTime}
       />
       <Content />
+      <nav class="post-nav" aria-label="Article navigation">
+        {previousEntry ? (
+          <a class="post-nav-link" href={`/${category}/${previousEntry.slug}`}>
+            <span class="post-nav-label">Previous article</span>
+            <span class="post-nav-title">{previousEntry.data.title}</span>
+          </a>
+        ) : (
+          <div class="post-nav-link post-nav-link-disabled" aria-hidden="true">
+            <span class="post-nav-label">Previous article</span>
+            <span class="post-nav-title">No previous article</span>
+          </div>
+        )}
+        {nextEntry ? (
+          <a class="post-nav-link" href={`/${category}/${nextEntry.slug}`}>
+            <span class="post-nav-label">Next article</span>
+            <span class="post-nav-title">{nextEntry.data.title}</span>
+          </a>
+        ) : (
+          <div class="post-nav-link post-nav-link-disabled" aria-hidden="true">
+            <span class="post-nav-label">Next article</span>
+            <span class="post-nav-title">No next article</span>
+          </div>
+        )}
+      </nav>
     </article>
     <ToC headings={headings} />
   </div>

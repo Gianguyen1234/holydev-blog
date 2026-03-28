@@ -7,19 +7,26 @@ export async function getStaticPaths() {
   const entries = await Promise.all(
     categoryKeys.map(async (key) => ({
       key,
-      items: await getCollection(key)
+      items: (await getCollection(key)).sort(
+        (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+      )
     }))
   );
 
   return entries.flatMap(({ key, items }) =>
-    items.map((entry) => ({
+    items.map((entry, index) => ({
       params: { category: key, slug: entry.slug },
-      props: { entry, category: key }
+      props: {
+        entry,
+        category: key,
+        previousEntry: items[index - 1] ?? null,
+        nextEntry: items[index + 1] ?? null
+      }
     }))
   );
 }
 
-const { entry, category } = Astro.props;
+const { entry, category, previousEntry, nextEntry } = Astro.props;
 const { Content, headings } = await entry.render();
 ---
 <PostLayout
@@ -27,4 +34,6 @@ const { Content, headings } = await entry.render();
   Content={Content}
   headings={headings}
   category={category}
+  previousEntry={previousEntry}
+  nextEntry={nextEntry}
 />
