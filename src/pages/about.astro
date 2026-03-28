@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="About"
+  description="About HolyDev and the focus of this technical blog."
+>
+  <section class="hero content">
+    <h1 class="hero-title">Hello, I'm HolyDev</h1>
+    <p class="hero-subtitle">
+      I started with Spring Boot and microservices - the kind of systems most backend engineers
+      build day to day.
+    </p>
+    <p class="hero-subtitle">
+      Over time, I became more interested in what actually happens underneath: how threads behave,
+      how Redis replicates data, and how distributed systems fail in real conditions.
+    </p>
+    <p class="hero-subtitle">
+      This site is where I document that journey.
+    </p>
+  </section>
+
+  <div class="content about-page">
+    <section class="about-section">
+      <h2 class="section-title">About This Site</h2>
+      <p>
+        This is not a tutorial collection.
+      </p>
+      <p>
+        It is a set of technical notes written while trying to answer a simple question: what
+        really happens under the hood?
+      </p>
+      <p>
+        Most articles focus on system behavior, failure modes, and tradeoffs, not just how to use
+        tools.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2 class="section-title">What I Focus On</h2>
+      <ul>
+        <li>Concurrency — threads, race conditions, atomicity</li>
+        <li>Redis internals — replication, PSYNC, failover</li>
+        <li>Distributed systems — consistency, partitioning, coordination</li>
+        <li>Microservices — as an entry point, not the end goal</li>
+      </ul>
+      <p>
+        I do not try to cover everything. Only the parts that matter when systems break.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2 class="section-title">Philosophy</h2>
+      <p>
+        I care less about abstractions in isolation, and more about how systems behave when they
+        are under load, out of sync, or close to failure.
+      </p>
+      <p>
+        The goal is not to collect tools or patterns. It is to understand the tradeoffs behind
+        them, and the failure modes they introduce.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2 class="section-title">A Bit About Me</h2>
+      <p>
+        I build backend systems and spend most of my time reading source code, debugging edge
+        cases, and trying to understand why things fail.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2 class="section-title">Elsewhere</h2>
+      <ul class="about-links">
+        <li><a href="https://github.com/Gianguyen1234" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.youtube.com/@dev-maniac2349" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        <li><a href="https://www.tiktok.com/@holy_dev5" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+        <li><a href="https://www.facebook.com/groups/501799607277748" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

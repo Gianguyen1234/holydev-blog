@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import ToC from "../components/ToC.astro";
 import PostMeta from "../components/PostMeta.astro";
+import AuthorNote from "../components/AuthorNote.astro";
 
 type Entry =
   | CollectionEntry<"redis">
@@ -126,6 +127,7 @@ const jsonLd = {
         readingTime={readingTime}
       />
       <Content />
+      <AuthorNote />
       <nav class="post-nav" aria-label="Article navigation">
         {previousEntry ? (
           <a class="post-nav-link" href={`/${category}/${previousEntry.slug}`}>
