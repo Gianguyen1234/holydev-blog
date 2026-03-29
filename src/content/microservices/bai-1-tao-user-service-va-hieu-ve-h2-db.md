@@ -5,7 +5,7 @@ pubDate: 2025-06-28
 category: "Microservices"
 ---
 
-# Video : [https://youtu.be/p6c18t-zDNc](https://youtu.be/p6c18t-zDNc)
+ Video : [Bài 1: Tạo user-service và hiểu về H2 DB](https://youtu.be/p6c18t-zDNc)
 
 # Kế hoạch tạo Microservices với Java Spring Boot
 

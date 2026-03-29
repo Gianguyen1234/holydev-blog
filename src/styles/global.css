@@ -1014,4 +1014,13 @@ footer {
   .card-grid {
     grid-template-columns: 1fr;
   }
+
+  .nav-home {
+    display: none;
+  }
+
+  .nav {
+    gap: 12px;
+    font-size: 14px;
+  }
 }
