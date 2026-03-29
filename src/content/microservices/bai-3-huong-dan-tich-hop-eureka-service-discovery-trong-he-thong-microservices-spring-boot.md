@@ -8,7 +8,6 @@ image: "/images/microservices/bai-3.jpg"
 
 ![Bài 3: Hướng Dẫn Tích Hợp Eureka Service Discovery trong Hệ Thống Microservices Spring Boot](/images/microservices/bai-3.jpg)
 
-
 ## Video
 
 [Bài 3: Hướng Dẫn Tích Hợp Eureka Service Discovery](https://youtu.be/0edUGBXNJDs)
