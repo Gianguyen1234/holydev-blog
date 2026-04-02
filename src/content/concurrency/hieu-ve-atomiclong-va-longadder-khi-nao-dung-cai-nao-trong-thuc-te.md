@@ -1,7 +1,7 @@
 ---
 title: "Hiểu về AtomicLong và LongAdder: Khi nào dùng cái nào trong thực tế?"
 description: "Giải thích sự khác nhau giữa AtomicLong và LongAdder trong Java concurrency, với trọng tâm là contention, performance và lựa chọn đúng theo bài toán."
-pubDate: 2026-04-03
+pubDate: 2026-04-02
 category: "Concurrency"
 image: "/images/concurrency/atomiclong-longadder.png"
 ---
