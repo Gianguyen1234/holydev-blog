@@ -138,8 +138,8 @@ Bài làm sẽ được đánh giá dựa trên:
 
 ## Timeline
 
-- Start: Tối hôm nay (GMT+7)  
-- Deadline: Tối ngày **07/06** (GMT+7)  
+- Start: 07/04 (GMT+7)  
+- Deadline: Tối ngày **12/04** (GMT+7)  
 - Submit PR: **20:00 – 21:00** (GMT+7)  
 
 ---
