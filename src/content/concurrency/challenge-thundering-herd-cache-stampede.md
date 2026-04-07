@@ -3,8 +3,9 @@ title: "Challenge: Thundering Herd Problem"
 description: "Reproduce and analyze cache stampede under high concurrency, then propose a solution with clear reasoning."
 pubDate: 2026-04-07
 category: "Concurrency"
+image: "/images/concurrency/thundering-herd-challenge.png"
 ---
-
+![Thundering Herd Challenge – Learn Concurrency & Win JetBrains IDE!](/images/concurrency/thundering-herd-challenge.png)
 ## Problem
 
 In real-world backend systems, caching is often used to reduce database load and improve latency.
