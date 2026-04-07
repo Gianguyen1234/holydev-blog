@@ -1,82 +1,80 @@
 ---
 title: "Challenge: Thundering Herd Problem"
 description: "Reproduce and analyze cache stampede under high concurrency, then propose a solution with clear reasoning."
-pubDate: 2026-04-06
+pubDate: 2026-04-07
 category: "Concurrency"
 ---
 
 ## Problem
 
-Trong các hệ thống backend thực tế, cache thường được sử dụng để giảm tải cho database và cải thiện latency.
+In real-world backend systems, caching is often used to reduce database load and improve latency.
 
-Tuy nhiên, có một tình huống khá “đau đầu”:
+However, there’s a tricky situation:
 
-Khi một key trong cache bị miss hoặc vừa hết hạn, nhiều request có thể đồng thời truy cập vào cùng một dữ liệu đó.
+When a cache key expires or is missing, **many requests can hit the same data simultaneously**.
 
-Thay vì được phục vụ từ cache, tất cả các request này sẽ cùng lúc đổ xuống database để lấy dữ liệu.
+Instead of being served from cache, all these requests hit the database at the same time.
 
-👉 Hệ quả:
-- Database bị dội một lượng lớn query trong thời gian ngắn
-- Latency tăng đột biến
-- Hệ thống dễ rơi vào trạng thái quá tải
+👉 Consequences:
+- Database receives a sudden spike of queries  
+- Latency spikes dramatically  
+- The system can easily become overloaded  
 
-Hiện tượng này được gọi là:
+This phenomenon is known as:
 
 > **Thundering Herd Problem (Cache Stampede)**
 
 ---
 
-## Mục tiêu của challenge
+## Challenge Goal
 
-Trong challenge này, bạn sẽ:
+In this challenge, you will:
 
-- Tái hiện lại vấn đề trong môi trường concurrency cao  
-- Phân tích nguyên nhân tại sao nó xảy ra  
-- Đưa ra giải pháp của bạn (kèm reasoning rõ ràng)
+- Reproduce the problem under high concurrency  
+- Analyze why it happens  
+- Propose your solution **with clear reasoning**  
 
-👉 Không có “đáp án đúng”  
-👉 Quan trọng là bạn **hiểu vấn đề đến đâu và giải thích được gì**
+👉 There is **no single correct answer**  
+👉 What matters most is how well you **understand the problem and explain your approach**
 
 ---
 
 ## How to Participate
 
-1. Fork repository:
+1. Fork the repository:  
    https://github.com/Gianguyen1234/thundering-herd-challenge
 
-2. Implement solution trong repo của bạn
+2. Implement your solution in your forked repo  
 
-3. Submit Pull Request về repo gốc trong khung giờ quy định
+3. Submit a Pull Request to the main repo within the specified time window  
 
----
-
-## Yêu cầu bài nộp
-
-Repository của bạn cần có:
-
-### 1. Source code
+> **Note:** You can use **any programming language**. Concurrency concepts are the same across languages. JetBrains IDE licenses support multiple languages, so language choice should not limit participation.  
 
 ---
 
-### 2. README (trình bày rõ ràng)
+## Submission Requirements
 
-Bao gồm:
+Your repository should include:
 
-- Cách chạy project  
-- Công nghệ sử dụng (ngôn ngữ, framework, storage, v.v.)  
-- Giải thích vấn đề (thundering herd xảy ra như thế nào)  
-- Cách bạn tái hiện (reproduce) vấn đề  
-- Giải pháp của bạn và reasoning (vì sao nó hoạt động, trade-offs)
+### 1. Source Code
 
----
+### 2. README (Clear Explanation)
 
-### 3. Video 
+Include:
 
-Trong video, bạn cần:
+- How to run your project  
+- Technologies used (language, framework, storage, etc.)  
+- Explanation of the problem (how the Thundering Herd occurs)  
+- How you reproduced the issue  
+- Your solution and reasoning (why it works, trade-offs)
 
-- Demo hệ thống khi bị thundering herd dưới concurrency  
-- Cho thấy **evidence** (log / metrics / output)  
-- Demo sau khi fix và so sánh kết quả  
+### 3. Video
+
+The video should show:
+
+- The system under Thundering Herd with high concurrency  
+- Evidence (logs / metrics / output)  
+- Demo after applying your solution and comparison of results  
 
 ---
 
@@ -84,105 +82,109 @@ Trong video, bạn cần:
 
 ### GET `/api/product/{id}`
 
-- Path params:
-  - `id`: product id
+- **Path params:**  
+  - `id`: product ID
 
-- Behavior:
-  - Kiểm tra cache  
-  - Cache miss → query database (giả lập delay ~100ms)  
-  - Trả về dữ liệu product  
+- **Behavior:**  
+  - Check cache  
+  - Cache miss → query database (simulate ~100ms delay)  
+  - Return product data  
 
-- Failure responses:
-  - 400 nếu `id` không hợp lệ  
-  - 404 nếu product không tồn tại (optional)
+- **Failure responses:**  
+  - 400 if `id` is invalid  
+  - 404 if product does not exist (optional)
 
 ---
 
 ## Concurrency & Caching
 
-- Hệ thống cần xử lý được nhiều request đồng thời (100–1000+)  
+- System should handle **100–1000+ concurrent requests**  
 - Cache key: `product:{id}`  
-- TTL: tuỳ chọn  
+- TTL: optional  
 
-Flow gợi ý:
+Suggested flow:
 
-- Ban đầu: **không có protection** → để thấy vấn đề xảy ra  
-- Sau đó: bạn tự thiết kế cách xử lý  
+- Start **without any protection** → observe the problem  
+- Then implement your solution to mitigate it  
 
 ---
 
 ## Storage
 
-Bạn có thể dùng bất kỳ loại storage nào:
+You can use any storage:
 
 - In-memory  
 - Database  
 - Redis  
-- hoặc bất cứ thứ gì bạn muốn  
+- Or any storage of your choice  
 
 ---
 
 ## Acceptance Criteria
 
-Bài làm sẽ được đánh giá dựa trên:
+Submissions will be evaluated based on:
 
-- Bạn có tái hiện được vấn đề hay không  
-- Có evidence rõ ràng (log / metrics / output)  
-- Giải pháp có thực sự giảm được herd  
-- Cách bạn giải thích:
-  - Hiểu vấn đề như thế nào  
-  - Vì sao chọn giải pháp đó  
-  - Trade-offs là gì  
+- Did you reproduce the problem?  
+- Clear evidence (logs / metrics / output)  
+- Does your solution reduce the herd effectively?  
+- Explanation quality:
+  - How well do you understand the problem?  
+  - Why did you choose your solution?  
+  - What are the trade-offs?  
 
 ---
 
 ## Timeline
 
-- Start: 07/04 (GMT+7)  
-- Deadline: Tối ngày **12/04** (GMT+7)  
-- Submit PR: **20:00 – 21:00** (GMT+7)  
+- **Start:** 07/04/2026 (GMT+7)  
+- **Deadline:** 12/04/2026 (GMT+7)  
+- **Submit PR:** 20:00 – 21:00 (GMT+7)
 
 ---
 
 ## Rules
 
-- Không giới hạn ngôn ngữ  
-- Không có “đáp án đúng”  
-- Đây là đề mở  
+- No restriction on programming language  
+- No “single correct answer”  
+- Open-ended challenge  
 
-⚠️ Quan trọng:
+⚠️ Important:
 
-- Code không phải là tất cả  
-- Điều được đánh giá cao là:
-  - Cách bạn hiểu vấn đề  
-  - Cách bạn phân tích  
-  - Cách bạn giải thích  
+- Code alone is not everything  
+- What matters most:
+  - How well you understand the problem  
+  - How you analyze it  
+  - How clearly you explain it  
 
 ---
 
 ## Reward
 
-🎁 12 licenses JetBrains IDE  
+🎁 12 JetBrains IDE licenses  
 
-- Mỗi người tối đa 1 license  
-- Số lượng có hạn  
+- Max **1 license per participant**  
+- Limited quantity  
 
-> Không phải cứ nộp là sẽ nhận thưởng.
+> Not every submission receives a license  
 
-Reward sẽ dành cho những người:
+Rewards go to those who:
 
-- Hiểu vấn đề rõ ràng  
-- Phân tích tốt  
-- Giải thích thuyết phục  
-- Chủ động trao đổi  
+- Understand the problem clearly  
+- Analyze effectively  
+- Explain convincingly  
+- Actively engage and share their approach  
 
 ---
 
 ## Final Note
-Mình tạo ra sân chơi này không chỉ để mọi người tham gia challenge và nhận thưởng, mà còn là nơi các dev có thể chia sẻ cách suy nghĩ và lý giải của riêng mình. 
 
-Mỗi bài giải đều có giá trị riêng. Những lời giải rõ ràng, dễ hiểu, hoặc có góc nhìn thú vị sẽ được ưu tiên highlight để người khác có thể học lại sau này.
+I created this challenge not just to code and win rewards, but to **share reasoning and thought process**.  
 
-Hy vọng rằng trong tương lai, khi ai đó tìm hiểu về bài toán này, họ có thể vào đây, đọc lại các lời giải, hiểu được cách tư duy, và thậm chí biết ơn những người đã chia sẻ trước đó.
+Every submission has value. The most **clear, insightful, or unique explanations** will be highlighted so that others can learn from them.
 
-Ngoài ra, những người có lời giải tốt nhất trong challenge sẽ được vinh danh trong README như một cách ghi nhận đóng góp của họ cho cộng đồng.
+I hope that in the future, anyone learning about this problem can come here, read multiple approaches, understand the reasoning, and maybe even thank the contributors.
+
+Top submissions will also be **recognized in the README** to acknowledge their contribution to the community.  
+
+12 participants with the **best explanations** will receive a JetBrains IDE license 🥂  
+
