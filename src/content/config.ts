@@ -5,12 +5,15 @@ const baseSchema = z.object({
   description: z.string(),
   pubDate: z.date(),
   image: z.string().optional(),
+  series: z.string().optional(),
+  seriesOrder: z.number().int().positive().optional(),
   category: z.enum([
     "Redis",
     "Distributed Systems",
     "Database Internals",
     "Concurrency",
-    "Microservices"
+    "Microservices",
+    "Multi-Module"
   ])
 });
 
@@ -19,11 +22,13 @@ const distributed = defineCollection({ type: "content", schema: baseSchema });
 const database = defineCollection({ type: "content", schema: baseSchema });
 const concurrency = defineCollection({ type: "content", schema: baseSchema });
 const microservices = defineCollection({ type: "content", schema: baseSchema });
+const multiModule = defineCollection({ type: "content", schema: baseSchema });
 
 export const collections = {
   redis,
   distributed,
   database,
   concurrency,
-  microservices
+  microservices,
+  "multi-module": multiModule
 };

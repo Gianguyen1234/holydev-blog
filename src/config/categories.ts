@@ -18,6 +18,10 @@ export const categories = {
   microservices: {
     label: "Microservices",
     description: "Services, APIs, communication."
+  },
+  "multi-module": {
+    label: "Multi-Module",
+    description: "Structure, modules, shared core."
   }
 } as const;
 

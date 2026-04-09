@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { categoryKeys, categoryMap, isCategoryKey } from "../../config/categories";
+import { categoryMap, categoryKeys, isCategoryKey } from "../../config/categories";
 
 export async function getStaticPaths() {
   return categoryKeys.map((category) => ({
@@ -17,38 +17,96 @@ if (!category || !isCategoryKey(category)) {
 
 const label = categoryMap[category];
 const entries = await getCollection(category);
-const sorted = entries.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const sorted = entries.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const seriesMap = new Map<string, typeof sorted>();
+const standalone: typeof sorted = [];
+
+for (const entry of sorted) {
+  if (entry.data.series) {
+    const items = seriesMap.get(entry.data.series) ?? [];
+    items.push(entry);
+    seriesMap.set(entry.data.series, items);
+  } else {
+    standalone.push(entry);
+  }
+}
+
+const seriesGroups = Array.from(seriesMap.entries()).map(([series, items]) => ({
+  series,
+  items: items.sort((a, b) => {
+    const orderA = a.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+  })
+}));
 ---
 <BaseLayout
   title={label}
-  description={`Bài viết chuyên mục ${label}.`}
+  description={`Articles in the ${label} category.`}
 >
   <section class="hero content">
     <h1 class="hero-title">{label}</h1>
     <p class="hero-subtitle">
-      Danh sách bài viết trong chuyên mục {label}.
+      Articles in the {label} category.
     </p>
   </section>
+
   <section>
-    <div class="post-list">
-      {sorted.map((entry) => (
-        <article class="post-item">
-          <h3>
-            <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
-          </h3>
-          <div class="post-meta">
-            <span>
-              {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              })}
-            </span>
-          </div>
-          <p>{entry.data.description}</p>
-        </article>
-      ))}
-    </div>
+    {seriesGroups.length ? (
+      <div class="series-group-list">
+        {seriesGroups.map((group) => (
+          <section class="series-group">
+            <div class="section-title">{group.series}</div>
+            <div class="post-list">
+              {group.items.map((entry) => (
+                <article class="post-item">
+                  <h3>
+                    <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
+                  </h3>
+                  <div class="post-meta">
+                    {entry.data.seriesOrder ? <span>Part {entry.data.seriesOrder}</span> : null}
+                    <span>
+                      {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                      })}
+                    </span>
+                  </div>
+                  <p>{entry.data.description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    ) : null}
+
+    {standalone.length ? (
+      <>
+        {seriesGroups.length ? <div class="section-title">Standalone Articles</div> : null}
+        <div class="post-list">
+          {standalone.map((entry) => (
+            <article class="post-item">
+              <h3>
+                <a href={`/${category}/${entry.slug}`}>{entry.data.title}</a>
+              </h3>
+              <div class="post-meta">
+                <span>
+                  {new Date(entry.data.pubDate).toLocaleDateString("vi-VN", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  })}
+                </span>
+              </div>
+              <p>{entry.data.description}</p>
+            </article>
+          ))}
+        </div>
+      </>
+    ) : null}
   </section>
+</BaseLayout>

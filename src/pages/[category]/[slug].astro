@@ -28,6 +28,16 @@ export async function getStaticPaths() {
 
 const { entry, category, previousEntry, nextEntry } = Astro.props;
 const { Content, headings } = await entry.render();
+const seriesEntries = entry.data.series
+  ? (await getCollection(category))
+      .filter((item) => item.data.series === entry.data.series)
+      .sort((a, b) => {
+        const orderA = a.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+      })
+  : [];
 ---
 <PostLayout
   entry={entry}
@@ -36,4 +46,5 @@ const { Content, headings } = await entry.render();
   category={category}
   previousEntry={previousEntry}
   nextEntry={nextEntry}
+  seriesEntries={seriesEntries}
 />

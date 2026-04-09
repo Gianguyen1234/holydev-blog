@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
-import ToC from "../components/ToC.astro";
 import PostMeta from "../components/PostMeta.astro";
 import AuthorNote from "../components/AuthorNote.astro";
 
@@ -10,15 +9,17 @@ type Entry =
   | CollectionEntry<"distributed">
   | CollectionEntry<"database">
   | CollectionEntry<"concurrency">
-  | CollectionEntry<"microservices">;
+  | CollectionEntry<"microservices">
+  | CollectionEntry<"multi-module">;
 
-const { entry, Content, headings, category, previousEntry, nextEntry } = Astro.props as {
+const { entry, Content, headings, category, previousEntry, nextEntry, seriesEntries } = Astro.props as {
   entry: Entry;
   Content: any;
   headings: { depth: number; slug: string; text: string }[];
   category: string;
   previousEntry?: Entry | null;
   nextEntry?: Entry | null;
+  seriesEntries?: Entry[];
 };
 const wordCount = entry.body ? entry.body.trim().split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(wordCount / 220));
@@ -70,19 +71,25 @@ const jsonLd = {
         const blocks = document.querySelectorAll(".post-layout article pre");
 
         blocks.forEach((block) => {
+          if (block.parentElement?.classList.contains("code-block")) return;
           if (block.querySelector("[data-copy-code]")) return;
+
+          const wrapper = document.createElement("div");
+          wrapper.className = "code-block";
+          block.parentNode?.insertBefore(wrapper, block);
+          wrapper.appendChild(block);
 
           const button = document.createElement("button");
           button.type = "button";
           button.className = "code-copy-button";
           button.setAttribute("data-copy-code", "");
           button.textContent = "Copy";
-          block.appendChild(button);
+          wrapper.appendChild(button);
         });
       };
 
       const copyCode = async (button) => {
-        const block = button.closest("pre");
+        const block = button.closest(".code-block")?.querySelector("pre");
         const code = block?.querySelector("code");
         const text = code?.textContent;
 
@@ -126,6 +133,26 @@ const jsonLd = {
         category={entry.data.category}
         readingTime={readingTime}
       />
+      {entry.data.series && seriesEntries && seriesEntries.length > 0 ? (
+        <section class="series-note">
+          <div class="series-note-label">This article is part of</div>
+          <div class="series-note-title">{entry.data.series}</div>
+          <ol class="series-note-list">
+            {seriesEntries.map((item) => {
+              const isCurrent = item.slug === entry.slug;
+              return (
+                <li class:list={["series-note-item", isCurrent && "is-current"]}>
+                  {isCurrent ? (
+                    <span>{item.data.title}</span>
+                  ) : (
+                    <a href={`/${category}/${item.slug}`}>{item.data.title}</a>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ) : null}
       <Content />
       <AuthorNote />
       <nav class="post-nav" aria-label="Article navigation">
@@ -153,6 +180,5 @@ const jsonLd = {
         )}
       </nav>
     </article>
-    <ToC headings={headings} />
   </div>
 </BaseLayout>
