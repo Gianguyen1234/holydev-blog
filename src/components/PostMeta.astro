@@ -1,15 +1,42 @@
 ---
-const { pubDate, category, readingTime } = Astro.props;
+import { categories, type CategoryKey } from "../config/categories";
+
+const { pubDate, category, readingTime, relatedCategories = [] } = Astro.props as {
+  pubDate: Date | string;
+  category: string;
+  readingTime: number;
+  relatedCategories?: string[];
+};
+
 const formattedDate = new Date(pubDate).toLocaleDateString("vi-VN", {
   year: "numeric",
   month: "long",
   day: "numeric"
 });
+
+const relatedCategoryLinks = Object.entries(categories)
+  .filter(([, value]) => relatedCategories.includes(value.label))
+  .map(([key, value]) => ({
+    href: `/${key as CategoryKey}/`,
+    label: value.label
+  }));
 ---
-<div class="post-meta">
-  <span>{formattedDate}</span>
-  <span>•</span>
-  <span>{category}</span>
-  <span>•</span>
-  <span>{readingTime} phút đọc</span>
+<div class="post-meta-wrap">
+  <div class="post-meta">
+    <span>{formattedDate}</span>
+    <span>&bull;</span>
+    <span>{category}</span>
+    <span>&bull;</span>
+    <span>{readingTime} phút đọc</span>
+  </div>
+  {relatedCategoryLinks.length > 0 ? (
+    <div class="post-related-meta">
+      <span class="post-related-label">Related</span>
+      <div class="post-related-links">
+        {relatedCategoryLinks.map((item) => (
+          <a class="post-related-link" href={item.href}>{item.label}</a>
+        ))}
+      </div>
+    </div>
+  ) : null}
 </div>

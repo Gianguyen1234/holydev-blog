@@ -132,6 +132,7 @@ const jsonLd = {
         pubDate={entry.data.pubDate}
         category={entry.data.category}
         readingTime={readingTime}
+        relatedCategories={entry.data.relatedCategories}
       />
       {entry.data.series && seriesEntries && seriesEntries.length > 0 ? (
         <section class="series-note">

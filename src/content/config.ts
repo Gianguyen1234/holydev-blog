@@ -7,6 +7,18 @@ const baseSchema = z.object({
   image: z.string().optional(),
   series: z.string().optional(),
   seriesOrder: z.number().int().positive().optional(),
+  relatedCategories: z
+    .array(
+      z.enum([
+        "Redis",
+        "Distributed Systems",
+        "Database Internals",
+        "Concurrency",
+        "Microservices",
+        "Multi-Module"
+      ])
+    )
+    .optional(),
   category: z.enum([
     "Redis",
     "Distributed Systems",

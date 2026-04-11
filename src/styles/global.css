@@ -402,12 +402,57 @@ main {
   font-size: 19px;
 }
 
+.post-meta-wrap {
+  display: grid;
+  gap: 10px;
+}
+
 .post-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   font-size: 13px;
   color: var(--text-muted);
+}
+
+.post-related-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-related-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.post-related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.post-related-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--surface-soft) 88%, var(--bg) 12%);
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.post-related-link:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border) 68%);
+  background: color-mix(in srgb, var(--surface-accent-soft) 72%, var(--surface-soft) 28%);
 }
 
 .post-item p {
