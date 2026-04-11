@@ -1,16 +1,4 @@
 export const categories = {
-  redis: {
-    label: "Redis",
-    description: "Replication, persistence, internals."
-  },
-  distributed: {
-    label: "Distributed Systems",
-    description: "Consensus, CAP, failure models."
-  },
-  database: {
-    label: "Database Internals",
-    description: "MVCC, storage engines, indexes."
-  },
   concurrency: {
     label: "Concurrency",
     description: "Threads, race conditions, atomicity."
@@ -22,6 +10,18 @@ export const categories = {
   "multi-module": {
     label: "Multi-Module",
     description: "Structure, modules, shared core."
+  },
+  redis: {
+    label: "Redis",
+    description: "Replication, persistence, internals."
+  },
+  distributed: {
+    label: "Distributed Systems",
+    description: "Consensus, CAP, failure models."
+  },
+  database: {
+    label: "Database Internals",
+    description: "MVCC, storage engines, indexes."
   }
 } as const;
 
