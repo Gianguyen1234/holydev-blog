@@ -1,7 +1,7 @@
 ---
 title: "ZSET Rate Limiting Trong Redis: Hiểu Đúng ZADD, ZREMRANGEBYSCORE, ZCARD Và ZRANGEBYSCORE"
 description: "Hiểu cách sliding window rate limiting hoạt động với Redis ZSET thông qua bốn lệnh cốt lõi: ZADD, ZREMRANGEBYSCORE, ZCARD và ZRANGEBYSCORE."
-pubDate: 2026-04-11
+pubDate: 2026-04-10
 category: "Redis"
 ---
 

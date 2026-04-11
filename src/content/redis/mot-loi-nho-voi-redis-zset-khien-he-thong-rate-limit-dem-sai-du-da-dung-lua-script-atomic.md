@@ -1,7 +1,7 @@
 ---
 title: "Một Lỗi Nhỏ Với Redis ZSET Khiến Hệ Thống Rate Limit Đếm Sai Dù Đã Dùng Lua Script Atomic"
 description: "Một lỗi logic nhỏ khi dùng ZADD với timestamp làm member có thể khiến Redis ZSET đếm sai request trong sliding window rate limiting, dù Lua script vẫn chạy atomic."
-pubDate: 2026-04-09
+pubDate: 2026-04-11
 category: "Redis"
 relatedCategories:
   - "Concurrency"
