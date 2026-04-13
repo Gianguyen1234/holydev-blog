@@ -138,7 +138,7 @@ Submissions will be evaluated based on:
 ## Timeline
 
 - **Start:** 07/04/2026 (GMT+7)  
-- **Deadline:** 12/04/2026 (GMT+7)  
+- **Deadline:** 07/06/2026 (GMT+7)  
 - **Submit PR:** 20:00 – 21:00 (GMT+7)
 
 ---
