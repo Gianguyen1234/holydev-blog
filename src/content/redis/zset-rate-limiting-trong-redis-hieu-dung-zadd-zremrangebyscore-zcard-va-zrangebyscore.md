@@ -275,7 +275,7 @@ Nói ngắn gọn:
 
 ---
 
-## 9. Một câu chốt
+## 9. Kết
 
 Rate limit bằng `ZSET` thực chất là:
 
